@@ -8,7 +8,7 @@ Angular CLI v19.2.2
 
 Node.js v22.14.0
 
-CSS/Tailwind
+CSS/Tailwind 4.0.13
 
 📂 Instalación y configuración
 
