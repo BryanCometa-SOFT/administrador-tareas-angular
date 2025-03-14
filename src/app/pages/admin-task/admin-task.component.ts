@@ -120,7 +120,7 @@ export class AdminTaskComponent {
     //Estados
     const text = {
       pending: 'Pendiente',
-      complete: 'Completo',
+      complete: 'Completado',
       reject: 'Rechazado',
     };    
 

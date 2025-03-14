@@ -42,7 +42,7 @@ export class StatusBadgeComponent {
     //Defino los textos
     const text = {
       pending: 'Pendiente',
-      complete: 'Completo',
+      complete: 'Completado',
       reject: 'Rechazado',
     };
 
