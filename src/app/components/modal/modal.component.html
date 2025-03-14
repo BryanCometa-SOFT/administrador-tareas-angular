@@ -1,0 +1,16 @@
+@if(show){
+  <div class="fixed inset-0 flex items-center justify-center bg-gray-900/5 backdrop-blur-sm">
+    <div class="bg-white p-6 rounded-lg shadow-xl" [class]="class">
+      <!-- Título -->
+      <div class="flex justify-between items-center border-b pb-2">
+        <h2 class="text-xl font-semibold text-gray-700">{{ title }}</h2>
+        <button class="text-gray-500 hover:text-gray-700 cursor-pointer" (click)="close()">✖</button>
+      </div>
+
+      <!-- Contenido dinámico con ng-content -->
+      <div class="mt-4">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+}

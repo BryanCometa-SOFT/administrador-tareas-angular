@@ -1,0 +1,36 @@
+<form [formGroup]="taskForm" (ngSubmit)="submitForm()" class="w-full">
+
+    <label class="block mt-4 mb-2 text-gray-700">Título:</label>
+    <input 
+      type="text" 
+      formControlName="title" 
+      class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-300"
+    >
+
+    <!-- Texto de validación -->
+    @if (taskForm.get('title')?.invalid && taskForm.get('title')?.touched) {
+      <p class="text-red-500 text-sm mt-1">El título debe tener mínimo 3 caracteres</p>
+    }
+  
+    <!-- Descripción -->
+    <label class="block mt-4 mb-2 text-gray-700">Descripción:</label>
+    <textarea 
+      formControlName="description" 
+      class="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
+    ></textarea>
+
+    <!-- Texto de validación -->
+    @if (taskForm.get('description')?.invalid && taskForm.get('description')?.touched) {
+      <p class="text-red-500 text-sm mt-1">La descripción debe tener mínimo 5 caracteres.</p>
+    }
+  
+    <!-- Botón -->
+    <button 
+      type="submit" 
+      class="w-full bg-green-500 text-white p-2 mt-4 rounded-md hover:bg-green-600 transition disabled:bg-gray-300 cursor-pointer"
+      [disabled]="taskForm.invalid"
+    >
+      {{ task ? 'Actualizar' : 'Guardar' }}
+    </button>
+  </form>
+  

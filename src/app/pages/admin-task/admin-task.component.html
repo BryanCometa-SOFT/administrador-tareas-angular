@@ -3,17 +3,18 @@
 <div class="container mx-auto px-4 sm:px-8">
     <div class="py-8">
         <div>
-            <h2 class="text-xl font-semibold leading-tight text-center">Gestor de tareas1</h2>
+            <h2 class="text-xl font-semibold leading-tight text-center">Gestor de tareas</h2>
         </div>
 
         <div class="flex justify-between">
-            <button class="bg-green-500 text-white px-2 rounded hover:bg-green-600 flex justify-center items-center cursor-pointer" >
+            <button (click)="openModalFormTask()" class="bg-green-500 text-white px-2 rounded hover:bg-green-600 flex justify-center items-center cursor-pointer" >
                 <img src="assets/img/icons/add.png" class="w-10 cursor-pointer mr-1" title="Agregar">
                 <span>Agregar</span>
             </button>
 
             <div class="form-group">
                 <input
+                    [(ngModel)]="searchTerm"
                     type="text"
                     class="w-full max-w-sm px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-1 focus:ring-gray-400 focus:border-gray-400 outline-none transition duration-200"
                     placeholder="Buscar..."
@@ -22,25 +23,43 @@
         </div>
 
         <div class="mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-            <app-table [headers]="headers" [data]="data">
+            <app-table [headers]="headers" [data]="filteredData()">
                 <!-- Slot para estado -->
                 <ng-template #slot_status let-row>
                     <app-status-badge [type]="row.status"></app-status-badge>
                 </ng-template>
 
-                <!-- Slot para acciones -->
+                <!-- Slot para botones de acciones -->
                 <ng-template #slot_action let-row>
-                    <button class="mr-1 cursor-pointer">
-                        <img src="assets/img/icons/checked.png" class="w-8" alt="Aprobar">
-                    </button>
-                    <button class="mr-1 cursor-pointer">
-                        <img src="assets/img/icons/edit.png" class="w-8" alt="Editar">
-                    </button>
-                    <button class="cursor-pointer">
+
+                    <!-- Boton solo habil si está pendiente por aprobar -->
+                    @if(row.status == "pending"){
+                        <button (click)="approvedTask(row.id)" class="mr-1 cursor-pointer">
+                            <img src="assets/img/icons/checked.png" class="w-8" alt="Aprobar">
+                        </button>
+                   
+                        <button (click)="openModalFormTask(row)" class="mr-1 cursor-pointer">
+                            <img src="assets/img/icons/edit.png" class="w-8" alt="Editar">
+                        </button>
+                    }
+                    
+                    <button (click)="deleteTask(row.id)" class="cursor-pointer">
                         <img src="assets/img/icons/del.png" class="w-8" alt="Eliminar">
                     </button>
                 </ng-template>
             </app-table>
         </div>
     </div>
+
+    <!-- Modal creación y edición -->
+    <app-modal 
+        [show]="isModalOpen" 
+        [title]="selectedTask ? 'Editar Tarea' : 'Nueva tarea'" 
+        class="w-3/12" 
+        (closeModal)="closeModal()"
+    >
+        <!-- Formulario reactivo para crear o editar tareas -->
+        <app-task-form [task]="selectedTask" (taskSaved)="managementTask($event)"></app-task-form>
+    </app-modal>
+      
   </div>
